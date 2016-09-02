@@ -1,17 +1,17 @@
 
 BasicGame.Preloader = function (game) {
 
-	this.background = null;
-	this.preloadBar = null;
+	// this.background = null;
+	// this.preloadBar = null;
 
-	this.ready = false;
+	// this.ready = false;
 
 };
 
 BasicGame.Preloader.prototype = {
 
 	preload: function () {
-
+		/*
 		//	These are the assets we loaded in Boot.js
 		//	A nice sparkly background and a loading progress bar
 		this.background = this.add.sprite(0, 0, 'preloaderBackground');
@@ -29,13 +29,23 @@ BasicGame.Preloader.prototype = {
 		this.load.audio('titleMusic', ['audio/main_menu.mp3']);
 		this.load.bitmapFont('caslon', 'fonts/caslon.png', 'fonts/caslon.xml');
 		//	+ lots of other required assets here
+		*/
+		this.load.image('blue', 'images/blue.png');
+		this.load.image('blueShine', 'images/blue_shine.png');
+		this.load.image('green', 'images/green.png');
+		this.load.image('greenShine', 'images/green_shine.png');
+		this.load.image('red', 'images/red.png');
+		this.load.image('redShine', 'images/red_shine.png');
+		this.load.image('yellow', 'images/yellow.png');
+		this.load.image('yellowShine', 'images/yellow_shine.png');
+		this.load.image('white', 'images/white.png');
 
 	},
 
 	create: function () {
 
 		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
-		this.preloadBar.cropEnabled = false;
+		// this.preloadBar.cropEnabled = false;
 
 	},
 
@@ -50,11 +60,15 @@ BasicGame.Preloader.prototype = {
 		//	If you don't have any music in your game then put the game.state.start line into the create function and delete
 		//	the update function completely.
 		
+		/*
 		if (this.cache.isSoundDecoded('titleMusic') && this.ready == false)
 		{
 			this.ready = true;
-			this.state.start('MainMenu');
+			
 		}
+		*/
+
+		this.state.start('MainMenu');
 
 	}
 
