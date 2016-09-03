@@ -23,22 +23,59 @@ BasicGame.Game = function (game) {
     //  You can use any of these from any function within this State.
     //  But do consider them as being 'reserved words', i.e. don't create a property for your own game called "world" or you'll over-write the world reference.
 
+    this.red = null;
+    this.blue = null;
+    this.green = null;
+    this.yellow = null;
+    this.countdownCounter = 3;
+    this.countdownText = null;
+    this.countdownEvent = null;
+
 };
 
 BasicGame.Game.prototype = {
 
     create: function () {
 
-        var red = this.add.sprite(140, 90, 'red');
-        var blue = this.add.sprite(310, 90, 'blue');
-        var green = this.add.sprite(140, 260, 'green');
-        var yellow = this.add.sprite(310, 260, 'yellow');
+        this.red = this.add.sprite(140, 90, 'red');
+        this.blue = this.add.sprite(310, 90, 'blue');
+        this.green = this.add.sprite(140, 260, 'green');
+        this.yellow = this.add.sprite(310, 260, 'yellow');
+
+        this.countdownText = this.game.add.text(300, 20, 'Countdown: 3',
+        { font: "50px 'Indie Flower'", fill: "#fff" , align: "center"});
+        this.countdownText.anchor.x = 0.5;
+
+        this.countdownEvent = this.game.time.events.loop(Phaser.Timer.SECOND, this.countdownUpdate, this);
 
     },
 
-    quitGame: function (pointer) {
+    quitGame: function () {
 
         this.state.start('MainMenu');
+
+    },
+
+    countdownUpdate: function () {
+
+        this.countdownCounter -= 1;
+
+        if (this.countdownCounter > 0) {
+            // 1st and 2nd loop            
+            this.countdownText.setText('Countdown: ' + this.countdownCounter);
+        } else if (this.countdownCounter === 0) {
+            // 3rd loop
+            this.countdownText.setText('Go!');
+        } else {
+            // 4th loop
+            this.countdownText.destroy();
+            this.game.time.events.remove(this.countdownEvent);
+            this.startGame();
+        }
+
+    },
+
+    startGame: function () {
 
     }
 

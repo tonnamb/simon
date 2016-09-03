@@ -25,7 +25,12 @@ BasicGame.MainMenu.prototype = {
 		white.inputEnabled = true;
 		white.events.onInputDown.add(this.startGame, this);
 
-		var playText = this.add.text(300, 250, " Start Game ", 
+		var simonText = this.add.text(300, 190, " Simon Says ", 
+		{ font: "65px Lobster", fill: "#000" , align: "center"});
+		simonText.anchor.x = 0.5;
+		simonText.anchor.y = 0.5;
+
+		var playText = this.add.text(300, 310, " Start Game ", 
 		{ font: "65px 'Indie Flower'", fill: "#000" , align: "center"});
 		playText.anchor.x = 0.5;
 		playText.anchor.y = 0.5;
