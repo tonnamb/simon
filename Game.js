@@ -39,7 +39,8 @@ BasicGame.Game = function (game) {
     this.playerInput = [];
     this.roundCounter = 1;
     this.roundText = null;
-    this.tryAgainText = null; 
+    this.tryAgainText = null;
+    this.resetButton = null;
 
 };
 
@@ -63,6 +64,13 @@ BasicGame.Game.prototype = {
         this.yellow.y = 260;
         this.yellow.s = this.add.sprite(this.yellow.x, this.yellow.y, 'yellow');
 
+        this.resetButton = this.add.sprite(580, 480, 'reset');
+        this.resetButton.anchor.x = 1.0;
+        this.resetButton.anchor.y = 1.0;
+        this.resetButton.inputEnabled = true;
+        this.resetButton.events.onInputDown.add(this.quitGame, this);
+
+        this.countdownCounter = 3;
         this.countdownText = this.game.add.text(300, 20, 'Countdown: 3',
         { font: "50px 'Indie Flower'", fill: "#fff" , align: "center"});
         this.countdownText.anchor.x = 0.5;
@@ -98,11 +106,11 @@ BasicGame.Game.prototype = {
 
     startGame: function () {
 
+        this.colorSequence = [];
         for (var i = 0; i < this.numStages; i += 1) {
             this.colorSequence.push(this.game.rnd.integerInRange(0,3));
         }
-
-        this.roundCounter = 1;
+        console.log(this.colorSequence);
 
         this.roundText = this.game.add.text(300, 20, 'Round: 1',
         { font: "50px 'Indie Flower'", fill: "#fff" , align: "center"});
@@ -113,6 +121,7 @@ BasicGame.Game.prototype = {
         this.tryAgainText.anchor.x = 0.5;
         this.tryAgainText.anchor.y = 1.0;
 
+        this.roundCounter = 1;
         this.roundShow(this.roundCounter);
 
     },
@@ -161,6 +170,8 @@ BasicGame.Game.prototype = {
     },
 
     playerTurn: function (round) {
+
+        this.playerInput = [];
 
         // Make tiles clickable
         this.red.s.inputEnabled = true;

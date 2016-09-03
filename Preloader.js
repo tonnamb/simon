@@ -39,6 +39,7 @@ BasicGame.Preloader.prototype = {
 		this.load.image('yellow', 'images/yellow.png');
 		this.load.image('yellowShine', 'images/yellow_shine.png');
 		this.load.image('white', 'images/white.png');
+		this.load.image('reset', 'images/reset.png');
 
 	},
 
