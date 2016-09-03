@@ -30,7 +30,7 @@ BasicGame.Game = function (game) {
     this.countdownCounter = 3;
     this.countdownText = null;
     this.countdownEvent = null;
-    this.numStages = 1;
+    this.numStages = 5;
     this.colorSequence = [];
     this.colorDict = {0: 'red', 1: 'blue', 2: 'green', 3: 'yellow'};
     this.colorDictRev = {'red': 0, 'blue': 1, 'green': 2, 'yellow': 3};
@@ -202,24 +202,24 @@ BasicGame.Game.prototype = {
     },
 
     flashTile: function (color) {
-        this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
+
+        var flashing = this.game.add.tween(this[color].s).to( { alpha: 0.10 }, 300, "Linear", false);
+        var final = this.game.add.tween(this[color].s).to( { alpha: 1.0 }, 300, "Linear", false);
+        flashing.chain(final);
+        flashing.start();
+
         this[color].a.play();
-        // Return to original sprite after 0.5 second
-        this.game.time.events.add(0.5 * Phaser.Timer.SECOND, 
-            function () {
-                this[color].s = this.add.sprite(this[color].x, this[color].y, color);
-            }, this);
+
     },
 
     flashTileFactory: function (color) {
         return function () {
-            this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
+            var flashing = this.game.add.tween(this[color].s).to( { alpha: 0.10 }, 300, "Linear", false);
+            var final = this.game.add.tween(this[color].s).to( { alpha: 1.0 }, 300, "Linear", false);
+            flashing.chain(final);
+            flashing.start();
+
             this[color].a.play();
-            // Return to original sprite after 0.5 second
-            this.game.time.events.add(0.5 * Phaser.Timer.SECOND, 
-                function () {
-                    this[color].s = this.add.sprite(this[color].x, this[color].y, color);
-                }, this);
         }
     },
 
@@ -229,7 +229,7 @@ BasicGame.Game.prototype = {
                 this.thisObj.playerInput.push( this.thisObj.colorDictRev[color] );
             }
             console.log(this.thisObj.playerInput);
-            // Clicked maximum times
+            // Clicked enough times for the round
             if (this.thisObj.playerInput.length === this.round) {
                 if (JSON.stringify(this.thisObj.playerInput) === JSON.stringify(this.thisObj.colorSequence.slice(0, this.round))) {
                     // Correct sequence

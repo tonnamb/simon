@@ -31,13 +31,9 @@ BasicGame.Preloader.prototype = {
 		//	+ lots of other required assets here
 		*/
 		this.load.image('blue', 'images/blue.png');
-		this.load.image('blueShine', 'images/blue_shine.png');
 		this.load.image('green', 'images/green.png');
-		this.load.image('greenShine', 'images/green_shine.png');
 		this.load.image('red', 'images/red.png');
-		this.load.image('redShine', 'images/red_shine.png');
 		this.load.image('yellow', 'images/yellow.png');
-		this.load.image('yellowShine', 'images/yellow_shine.png');
 		this.load.image('white', 'images/white.png');
 		this.load.image('reset', 'images/reset.png');
 
@@ -53,5 +49,5 @@ BasicGame.Preloader.prototype = {
 		this.state.start('MainMenu');
 
 	}
-	
+
 };
