@@ -30,7 +30,7 @@ BasicGame.Game = function (game) {
     this.countdownCounter = 3;
     this.countdownText = null;
     this.countdownEvent = null;
-    this.numStep = 10;
+    this.numStages = 5;
     this.colorSequence = [];
     this.colorDict = {0: 'red', 1: 'blue', 2: 'green', 3: 'yellow'};
     this.colorDictRev = {'red': 0, 'blue': 1, 'green': 2, 'yellow': 3};
@@ -98,7 +98,7 @@ BasicGame.Game.prototype = {
 
     startGame: function () {
 
-        for (var i = 0; i < this.numStep; i += 1) {
+        for (var i = 0; i < this.numStages; i += 1) {
             this.colorSequence.push(this.game.rnd.integerInRange(0,3));
         }
 
