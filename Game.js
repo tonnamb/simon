@@ -181,23 +181,23 @@ BasicGame.Game.prototype = {
         // Make tiles clickable
         this.red.s.inputEnabled = true;
         this.red.s.events.onInputDown.removeAll();
-        this.red.s.events.onInputDown.add(this.updatePlayerInput('red'), {thisObj: this, round: round});
         this.red.s.events.onInputDown.add(this.flashTileFactory('red'), this);
+        this.red.s.events.onInputDown.add(this.updatePlayerInput('red'), {thisObj: this, round: round});
 
         this.blue.s.inputEnabled = true;
         this.blue.s.events.onInputDown.removeAll();
-        this.blue.s.events.onInputDown.add(this.updatePlayerInput('blue'), {thisObj: this, round: round});
         this.blue.s.events.onInputDown.add(this.flashTileFactory('blue'), this);
+        this.blue.s.events.onInputDown.add(this.updatePlayerInput('blue'), {thisObj: this, round: round});
 
         this.green.s.inputEnabled = true;
         this.green.s.events.onInputDown.removeAll();
-        this.green.s.events.onInputDown.add(this.updatePlayerInput('green'), {thisObj: this, round: round});
         this.green.s.events.onInputDown.add(this.flashTileFactory('green'), this);
+        this.green.s.events.onInputDown.add(this.updatePlayerInput('green'), {thisObj: this, round: round});
 
         this.yellow.s.inputEnabled = true;
         this.yellow.s.events.onInputDown.removeAll();
-        this.yellow.s.events.onInputDown.add(this.updatePlayerInput('yellow'), {thisObj: this, round: round});
         this.yellow.s.events.onInputDown.add(this.flashTileFactory('yellow'), this);
+        this.yellow.s.events.onInputDown.add(this.updatePlayerInput('yellow'), {thisObj: this, round: round});
 
     },
 
