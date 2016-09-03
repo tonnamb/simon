@@ -30,7 +30,7 @@ BasicGame.Game = function (game) {
     this.countdownCounter = 3;
     this.countdownText = null;
     this.countdownEvent = null;
-    this.numStep = 20;
+    this.numStep = 10;
     this.colorSequence = [];
     this.colorDict = {0: 'red', 1: 'blue', 2: 'green', 3: 'yellow'};
     this.colorDictRev = {'red': 0, 'blue': 1, 'green': 2, 'yellow': 3};
@@ -39,6 +39,7 @@ BasicGame.Game = function (game) {
     this.playerInput = [];
     this.roundCounter = 1;
     this.roundText = null;
+    this.tryAgainText = null; 
 
 };
 
@@ -102,9 +103,16 @@ BasicGame.Game.prototype = {
         }
 
         this.roundCounter = 1;
+
         this.roundText = this.game.add.text(300, 20, 'Round: 1',
         { font: "50px 'Indie Flower'", fill: "#fff" , align: "center"});
         this.roundText.anchor.x = 0.5;
+
+        this.tryAgainText = this.game.add.text(300, 480, '',
+        { font: "40px 'Indie Flower'", fill: "#fff" , align: "center"});
+        this.tryAgainText.anchor.x = 0.5;
+        this.tryAgainText.anchor.y = 1.0;
+
         this.roundShow(this.roundCounter);
 
     },
@@ -113,9 +121,13 @@ BasicGame.Game.prototype = {
         
         // Make tiles unclickable during flash show
         this.red.s.inputEnabled = false;
+        this.red.s.events.onInputDown.removeAll();
         this.blue.s.inputEnabled = false;
+        this.blue.s.events.onInputDown.removeAll();
         this.green.s.inputEnabled = false;
+        this.green.s.events.onInputDown.removeAll();
         this.yellow.s.inputEnabled = false;
+        this.yellow.s.events.onInputDown.removeAll();
 
         // Update roundText
         this.roundText.setText('Round: ' + round);
@@ -152,20 +164,24 @@ BasicGame.Game.prototype = {
 
         // Make tiles clickable
         this.red.s.inputEnabled = true;
-        this.red.s.events.onInputDown.add(this.flashTileFactory('red'), this);
+        this.red.s.events.onInputDown.removeAll();
         this.red.s.events.onInputDown.add(this.updatePlayerInput('red'), {thisObj: this, round: round});
+        this.red.s.events.onInputDown.add(this.flashTileFactory('red'), this);
 
         this.blue.s.inputEnabled = true;
-        this.blue.s.events.onInputDown.add(this.flashTileFactory('blue'), this);
+        this.blue.s.events.onInputDown.removeAll();
         this.blue.s.events.onInputDown.add(this.updatePlayerInput('blue'), {thisObj: this, round: round});
+        this.blue.s.events.onInputDown.add(this.flashTileFactory('blue'), this);
 
         this.green.s.inputEnabled = true;
-        this.green.s.events.onInputDown.add(this.flashTileFactory('green'), this);
+        this.green.s.events.onInputDown.removeAll();
         this.green.s.events.onInputDown.add(this.updatePlayerInput('green'), {thisObj: this, round: round});
+        this.green.s.events.onInputDown.add(this.flashTileFactory('green'), this);
 
         this.yellow.s.inputEnabled = true;
-        this.yellow.s.events.onInputDown.add(this.flashTileFactory('yellow'), this);
+        this.yellow.s.events.onInputDown.removeAll();
         this.yellow.s.events.onInputDown.add(this.updatePlayerInput('yellow'), {thisObj: this, round: round});
+        this.yellow.s.events.onInputDown.add(this.flashTileFactory('yellow'), this);
 
     },
 
@@ -191,7 +207,10 @@ BasicGame.Game.prototype = {
 
     updatePlayerInput: function (color) {
         return function () {
-            this.thisObj.playerInput.push( this.thisObj.colorDictRev[color] );
+            if (this.thisObj.playerInput.length < this. round) {
+                this.thisObj.playerInput.push( this.thisObj.colorDictRev[color] );
+            }
+            console.log(this.thisObj.playerInput);
             // Clicked maximum times
             if (this.thisObj.playerInput.length === this.round) {
                 if (JSON.stringify(this.thisObj.playerInput) === JSON.stringify(this.thisObj.colorSequence.slice(0, this.round))) {
@@ -199,14 +218,24 @@ BasicGame.Game.prototype = {
                     console.log('Match!');
                     // Clear playerInput
                     this.thisObj.playerInput = [];
+                    // Hide try again text
+                    this.thisObj.tryAgainText.setText('');
+                    // Show correct text
+                    this.thisObj.roundText.setText('Correct!');
                     // Start next round
                     this.thisObj.roundCounter += 1;
-                    this.thisObj.roundShow(this.thisObj.roundCounter);
+                    // Add 1 second of wait time before start next round
+                    this.thisObj.game.time.events.add(Phaser.Timer.SECOND,
+                        function () {
+                            this.thisObj.roundShow(this.thisObj.roundCounter);
+                        }, this);
                 } else {
                     // Wrong sequence
                     console.log('Not Match!');
                     // Clear playerInput
                     this.thisObj.playerInput = [];
+                    // Show try again text
+                    this.thisObj.tryAgainText.setText('Try again');
                     // Restart round
                     this.thisObj.roundShow(this.thisObj.roundCounter);
                 }
