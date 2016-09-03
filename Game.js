@@ -222,13 +222,19 @@ BasicGame.Game.prototype = {
                     this.thisObj.tryAgainText.setText('');
                     // Show correct text
                     this.thisObj.roundText.setText('Correct!');
-                    // Start next round
-                    this.thisObj.roundCounter += 1;
-                    // Add 1 second of wait time before start next round
-                    this.thisObj.game.time.events.add(Phaser.Timer.SECOND,
-                        function () {
-                            this.thisObj.roundShow(this.thisObj.roundCounter);
-                        }, this);
+                    if (this.thisObj.roundCounter === this.thisObj.numStages) {
+                        // Win!
+                        console.log('You win!');
+                    } else {
+                        // Start next round
+                        this.thisObj.roundCounter += 1;
+                        // Add 1 second of wait time before start next round
+                        this.thisObj.game.time.events.add(Phaser.Timer.SECOND,
+                            function () {
+                                this.thisObj.roundShow(this.thisObj.roundCounter);
+                            }, this);
+                    }
+                    
                 } else {
                     // Wrong sequence
                     console.log('Not Match!');
