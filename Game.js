@@ -33,8 +33,10 @@ BasicGame.Game = function (game) {
     this.numStep = 20;
     this.colorSequence = [];
     this.colorDict = {0: 'red', 1: 'blue', 2: 'green', 3: 'yellow'};
+    this.colorDictRev = {'red': 0, 'blue': 1, 'green': 2, 'yellow': 3};
     this.colorFlashEvent = null;
     this.colorFlashCounter = 0;
+    this.playerInput = [];
 
 };
 
@@ -99,20 +101,6 @@ BasicGame.Game.prototype = {
 
         this.roundShow(3);
 
-        /* Make tiles clickable
-        this.red.s.inputEnabled = true;
-        this.red.s.events.onInputDown.add(this.flashTileFactory('red'), this);
-
-        this.blue.s.inputEnabled = true;
-        this.blue.s.events.onInputDown.add(this.flashTileFactory('blue'), this);
-
-        this.green.s.inputEnabled = true;
-        this.green.s.events.onInputDown.add(this.flashTileFactory('green'), this);
-
-        this.yellow.s.inputEnabled = true;
-        this.yellow.s.events.onInputDown.add(this.flashTileFactory('yellow'), this);
-        */
-
     },
 
     roundShow: function (round) {
@@ -136,16 +124,39 @@ BasicGame.Game.prototype = {
             this.thisObj.game.time.events.remove(this.thisObj.colorFlashEvent);
             // Reset colorFlashCounter
             this.thisObj.colorFlashCounter = 0;
+            // start playerTurn
+            this.thisObj.playerTurn(this.round);
         }
 
         this.thisObj.colorFlashCounter += 1;
 
     },
 
+    playerTurn: function (round) {
+
+        // Make tiles clickable
+        this.red.s.inputEnabled = true;
+        this.red.s.events.onInputDown.add(this.flashTileFactory('red'), this);
+        this.red.s.events.onInputDown.add(this.updatePlayerInput('red'), {thisObj: this, round: round});
+
+        this.blue.s.inputEnabled = true;
+        this.blue.s.events.onInputDown.add(this.flashTileFactory('blue'), this);
+        this.blue.s.events.onInputDown.add(this.updatePlayerInput('blue'), {thisObj: this, round: round});
+
+        this.green.s.inputEnabled = true;
+        this.green.s.events.onInputDown.add(this.flashTileFactory('green'), this);
+        this.green.s.events.onInputDown.add(this.updatePlayerInput('green'), {thisObj: this, round: round});
+
+        this.yellow.s.inputEnabled = true;
+        this.yellow.s.events.onInputDown.add(this.flashTileFactory('yellow'), this);
+        this.yellow.s.events.onInputDown.add(this.updatePlayerInput('yellow'), {thisObj: this, round: round});
+
+    },
+
     flashTile: function (color) {
         this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
-        // Return to original sprite
-        this.game.time.events.add(0.5 * Phaser.Timer.SECOND, 
+        // Return to original sprite after 0.7 second
+        this.game.time.events.add(0.7 * Phaser.Timer.SECOND, 
             function () {
                 this[color].s = this.add.sprite(this[color].x, this[color].y, color);
             }, this);
@@ -154,11 +165,25 @@ BasicGame.Game.prototype = {
     flashTileFactory: function (color) {
         return function () {
             this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
-            // Return to original sprite
-            this.game.time.events.add(Phaser.Timer.SECOND, 
+            // Return to original sprite after 0.7 second
+            this.game.time.events.add(0.7 * Phaser.Timer.SECOND, 
                 function () {
                     this[color].s = this.add.sprite(this[color].x, this[color].y, color);
                 }, this);
+        }
+    },
+
+    updatePlayerInput: function (color) {
+        return function () {
+            this.thisObj.playerInput.push( this.thisObj.colorDictRev[color] );
+            if (this.thisObj.playerInput.length === this.round) {
+                console.log('Max click!');
+                console.log(JSON.stringify(this.thisObj.playerInput));
+                console.log(JSON.stringify(this.thisObj.colorSequence.slice(0, this.round)));
+                if (JSON.stringify(this.thisObj.playerInput) === JSON.stringify(this.thisObj.colorSequence.slice(0, this.round))) {
+                    console.log('Match!');
+                }
+            }
         }
     }
 
