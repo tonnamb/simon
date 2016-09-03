@@ -37,6 +37,7 @@ BasicGame.Game = function (game) {
     this.colorFlashEvent = null;
     this.colorFlashCounter = 0;
     this.playerInput = [];
+    this.roundCounter = 1;
 
 };
 
@@ -99,12 +100,19 @@ BasicGame.Game.prototype = {
             this.colorSequence.push(this.game.rnd.integerInRange(0,3));
         }
 
-        this.roundShow(3);
+        this.roundCounter = 1;
+        this.roundShow(this.roundCounter);
 
     },
 
     roundShow: function (round) {
         
+        // Make tiles unclickable during flash show
+        this.red.s.inputEnabled = false;
+        this.blue.s.inputEnabled = false;
+        this.green.s.inputEnabled = false;
+        this.yellow.s.inputEnabled = false;
+
         this.colorFlashCounter = 0;
         // Immediately call the flashUpdate
         // Without this line, the game will wait 1 second before the loop starts
@@ -176,12 +184,23 @@ BasicGame.Game.prototype = {
     updatePlayerInput: function (color) {
         return function () {
             this.thisObj.playerInput.push( this.thisObj.colorDictRev[color] );
+            // Clicked maximum times
             if (this.thisObj.playerInput.length === this.round) {
-                console.log('Max click!');
-                console.log(JSON.stringify(this.thisObj.playerInput));
-                console.log(JSON.stringify(this.thisObj.colorSequence.slice(0, this.round)));
                 if (JSON.stringify(this.thisObj.playerInput) === JSON.stringify(this.thisObj.colorSequence.slice(0, this.round))) {
+                    // Correct sequence
                     console.log('Match!');
+                    // Clear playerInput
+                    this.thisObj.playerInput = [];
+                    // Start next round
+                    this.thisObj.roundCounter += 1;
+                    this.thisObj.roundShow(this.thisObj.roundCounter);
+                } else {
+                    // Wrong sequence
+                    console.log('Not Match!');
+                    // Clear playerInput
+                    this.thisObj.playerInput = [];
+                    // Restart round
+                    this.thisObj.roundShow(this.thisObj.roundCounter);
                 }
             }
         }
