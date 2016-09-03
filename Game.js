@@ -38,6 +38,7 @@ BasicGame.Game = function (game) {
     this.colorFlashCounter = 0;
     this.playerInput = [];
     this.roundCounter = 1;
+    this.roundText = null;
 
 };
 
@@ -101,6 +102,9 @@ BasicGame.Game.prototype = {
         }
 
         this.roundCounter = 1;
+        this.roundText = this.game.add.text(300, 20, 'Round: 1',
+        { font: "50px 'Indie Flower'", fill: "#fff" , align: "center"});
+        this.roundText.anchor.x = 0.5;
         this.roundShow(this.roundCounter);
 
     },
@@ -113,10 +117,14 @@ BasicGame.Game.prototype = {
         this.green.s.inputEnabled = false;
         this.yellow.s.inputEnabled = false;
 
+        // Update roundText
+        this.roundText.setText('Round: ' + round);
+
         this.colorFlashCounter = 0;
-        // Immediately call the flashUpdate
-        // Without this line, the game will wait 1 second before the loop starts
-        (this.flashUpdate.bind({thisObj: this, round: round}))();
+        
+        // This line will call the flashUpdate immediately, without waiting 1 second
+        // (this.flashUpdate.bind({thisObj: this, round: round}))();
+
         // Loop calling flashUpdate
         this.colorFlashEvent = this.game.time.events.loop(Phaser.Timer.SECOND, this.flashUpdate, {thisObj: this, round: round});
 
@@ -163,8 +171,8 @@ BasicGame.Game.prototype = {
 
     flashTile: function (color) {
         this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
-        // Return to original sprite after 0.7 second
-        this.game.time.events.add(0.7 * Phaser.Timer.SECOND, 
+        // Return to original sprite after 0.5 second
+        this.game.time.events.add(0.5 * Phaser.Timer.SECOND, 
             function () {
                 this[color].s = this.add.sprite(this[color].x, this[color].y, color);
             }, this);
@@ -173,8 +181,8 @@ BasicGame.Game.prototype = {
     flashTileFactory: function (color) {
         return function () {
             this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
-            // Return to original sprite after 0.7 second
-            this.game.time.events.add(0.7 * Phaser.Timer.SECOND, 
+            // Return to original sprite after 0.5 second
+            this.game.time.events.add(0.5 * Phaser.Timer.SECOND, 
                 function () {
                     this[color].s = this.add.sprite(this[color].x, this[color].y, color);
                 }, this);
