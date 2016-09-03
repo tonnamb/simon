@@ -30,7 +30,7 @@ BasicGame.Game = function (game) {
     this.countdownCounter = 3;
     this.countdownText = null;
     this.countdownEvent = null;
-    this.numStages = 5;
+    this.numStages = 1;
     this.colorSequence = [];
     this.colorDict = {0: 'red', 1: 'blue', 2: 'green', 3: 'yellow'};
     this.colorDictRev = {'red': 0, 'blue': 1, 'green': 2, 'yellow': 3};
@@ -41,6 +41,7 @@ BasicGame.Game = function (game) {
     this.roundText = null;
     this.tryAgainText = null;
     this.resetButton = null;
+    this.youWinText = null;
 
 };
 
@@ -242,6 +243,7 @@ BasicGame.Game.prototype = {
                     if (this.thisObj.roundCounter === this.thisObj.numStages) {
                         // Win!
                         console.log('You win!');
+                        this.thisObj.createYouWinText();
                     } else {
                         // Start next round
                         this.thisObj.roundCounter += 1;
@@ -264,6 +266,15 @@ BasicGame.Game.prototype = {
                 }
             }
         }
+    },
+
+    createYouWinText: function () {
+
+        this.youWinText = this.game.add.text(300, 480, 'You win!',
+        { font: "40px 'Indie Flower'", fill: "#fff" , align: "center"});
+        this.youWinText.anchor.x = 0.5;
+        this.youWinText.anchor.y = 1.0;
+
     }
 
 };
