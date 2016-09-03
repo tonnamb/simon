@@ -41,6 +41,11 @@ BasicGame.Preloader.prototype = {
 		this.load.image('white', 'images/white.png');
 		this.load.image('reset', 'images/reset.png');
 
+		this.load.audio('sound0', 'sounds/simonSound0.mp3');
+		this.load.audio('sound1', 'sounds/simonSound1.mp3');
+		this.load.audio('sound2', 'sounds/simonSound2.mp3');
+		this.load.audio('sound3', 'sounds/simonSound3.mp3');
+
 	},
 
 	create: function () {

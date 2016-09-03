@@ -51,18 +51,22 @@ BasicGame.Game.prototype = {
         this.red.x = 140;
         this.red.y = 90;
         this.red.s = this.add.sprite(this.red.x, this.red.y, 'red');
+        this.red.a = this.game.add.audio('sound0');
         
         this.blue.x = 310;
         this.blue.y = 90;
         this.blue.s = this.add.sprite(this.blue.x, this.blue.y, 'blue');
+        this.blue.a = this.game.add.audio('sound1');
 
         this.green.x = 140;
         this.green.y = 260;
         this.green.s = this.add.sprite(this.green.x, this.green.y, 'green');
+        this.green.a = this.game.add.audio('sound2');
 
         this.yellow.x = 310;
         this.yellow.y = 260;
         this.yellow.s = this.add.sprite(this.yellow.x, this.yellow.y, 'yellow');
+        this.yellow.a = this.game.add.audio('sound3');
 
         this.resetButton = this.add.sprite(580, 480, 'reset');
         this.resetButton.anchor.x = 1.0;
@@ -198,6 +202,7 @@ BasicGame.Game.prototype = {
 
     flashTile: function (color) {
         this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
+        this[color].a.play();
         // Return to original sprite after 0.5 second
         this.game.time.events.add(0.5 * Phaser.Timer.SECOND, 
             function () {
@@ -208,6 +213,7 @@ BasicGame.Game.prototype = {
     flashTileFactory: function (color) {
         return function () {
             this[color].s = this.add.sprite(this[color].x, this[color].y, color + 'Shine');
+            this[color].a.play();
             // Return to original sprite after 0.5 second
             this.game.time.events.add(0.5 * Phaser.Timer.SECOND, 
                 function () {
