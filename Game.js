@@ -132,16 +132,6 @@ BasicGame.Game.prototype = {
     },
 
     roundShow: function (round) {
-        
-        // Make tiles unclickable during flash show
-        this.red.s.inputEnabled = false;
-        this.red.s.events.onInputDown.removeAll();
-        this.blue.s.inputEnabled = false;
-        this.blue.s.events.onInputDown.removeAll();
-        this.green.s.inputEnabled = false;
-        this.green.s.events.onInputDown.removeAll();
-        this.yellow.s.inputEnabled = false;
-        this.yellow.s.events.onInputDown.removeAll();
 
         // Update roundText
         this.roundText.setText('Round: ' + round);
@@ -180,22 +170,18 @@ BasicGame.Game.prototype = {
 
         // Make tiles clickable
         this.red.s.inputEnabled = true;
-        this.red.s.events.onInputDown.removeAll();
         this.red.s.events.onInputDown.add(this.flashTileFactory('red'), this);
         this.red.s.events.onInputDown.add(this.updatePlayerInput('red'), {thisObj: this, round: round});
 
         this.blue.s.inputEnabled = true;
-        this.blue.s.events.onInputDown.removeAll();
         this.blue.s.events.onInputDown.add(this.flashTileFactory('blue'), this);
         this.blue.s.events.onInputDown.add(this.updatePlayerInput('blue'), {thisObj: this, round: round});
 
         this.green.s.inputEnabled = true;
-        this.green.s.events.onInputDown.removeAll();
         this.green.s.events.onInputDown.add(this.flashTileFactory('green'), this);
         this.green.s.events.onInputDown.add(this.updatePlayerInput('green'), {thisObj: this, round: round});
 
         this.yellow.s.inputEnabled = true;
-        this.yellow.s.events.onInputDown.removeAll();
         this.yellow.s.events.onInputDown.add(this.flashTileFactory('yellow'), this);
         this.yellow.s.events.onInputDown.add(this.updatePlayerInput('yellow'), {thisObj: this, round: round});
 
@@ -231,6 +217,17 @@ BasicGame.Game.prototype = {
             console.log(this.thisObj.playerInput);
             // Clicked enough times for the round
             if (this.thisObj.playerInput.length === this.round) {
+
+                // Make tiles unclickable right away
+                this.thisObj.red.s.inputEnabled = false;
+                this.thisObj.red.s.events.onInputDown.removeAll();
+                this.thisObj.blue.s.inputEnabled = false;
+                this.thisObj.blue.s.events.onInputDown.removeAll();
+                this.thisObj.green.s.inputEnabled = false;
+                this.thisObj.green.s.events.onInputDown.removeAll();
+                this.thisObj.yellow.s.inputEnabled = false;
+                this.thisObj.yellow.s.events.onInputDown.removeAll();
+
                 if (JSON.stringify(this.thisObj.playerInput) === JSON.stringify(this.thisObj.colorSequence.slice(0, this.round))) {
                     // Correct sequence
                     console.log('Match!');
