@@ -35,6 +35,8 @@ BasicGame.Preloader.prototype = {
 		this.load.image('red', 'images/red.png');
 		this.load.image('yellow', 'images/yellow.png');
 		this.load.image('white', 'images/white.png');
+		this.load.image('whiteEasy', 'images/white_easy.png');
+		this.load.image('whiteHard', 'images/white_hard.png');
 		this.load.image('reset', 'images/reset.png');
 
 		this.load.audio('sound0', 'sounds/simonSound0.mp3');

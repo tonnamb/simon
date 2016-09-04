@@ -19,21 +19,35 @@ BasicGame.MainMenu.prototype = {
 		this.playButton = this.add.button(400, 600, 'playButton', this.startGame, this, 'buttonOver', 'buttonOut', 'buttonOver');
 		*/
 
-		var white = this.add.sprite(300, 250, 'white');
+		var white = this.add.sprite(300, 130, 'white');
 		white.anchor.x = 0.5;
 		white.anchor.y = 0.5;
-		white.inputEnabled = true;
-		white.events.onInputDown.add(this.startGame, this);
 
-		var simonText = this.add.text(300, 190, " Simon Says ", 
-		{ font: "65px Lobster", fill: "#000" , align: "center"});
+		var simonText = this.add.text(300, 130, " Simon Says ", 
+		{ font: "70px Lobster", fill: "#000" , align: "center"});
 		simonText.anchor.x = 0.5;
 		simonText.anchor.y = 0.5;
 
-		var playText = this.add.text(300, 310, " Start Game ", 
-		{ font: "65px 'Indie Flower'", fill: "#000" , align: "center"});
-		playText.anchor.x = 0.5;
-		playText.anchor.y = 0.5;
+		var whiteEasy = this.add.sprite(300, 300, 'whiteEasy');
+		whiteEasy.anchor.x = 0.5;
+		whiteEasy.anchor.y = 0.5;
+
+		var easyText = this.add.text(300, 300, " Easy Mode ", 
+		{ font: "50px 'Indie Flower'", fill: "#000" , align: "center"});
+		easyText.anchor.x = 0.5;
+		easyText.anchor.y = 0.5;
+		easyText.inputEnabled = true;
+		easyText.events.onInputDown.add(this.startGame, this);
+
+		var whiteHard = this.add.sprite(300, 410, 'whiteHard');
+		whiteHard.anchor.x = 0.5;
+		whiteHard.anchor.y = 0.5;
+
+		var hardText = this.add.text(300, 410, " Hard Mode ", 
+		{ font: "50px Righteous", fill: "#000" , align: "center"});
+		hardText.anchor.x = 0.5;
+		hardText.anchor.y = 0.5;
+
 	},
 
 	startGame: function (pointer) {

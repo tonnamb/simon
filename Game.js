@@ -267,8 +267,8 @@ BasicGame.Game.prototype = {
 
     createYouWinText: function () {
 
-        this.youWinText = this.game.add.text(300, 480, 'You win!',
-        { font: "40px 'Indie Flower'", fill: "#fff" , align: "center"});
+        this.youWinText = this.game.add.text(300, 490, 'You win!',
+        { font: "45px 'Indie Flower'", fill: "#fff" , align: "center"});
         this.youWinText.anchor.x = 0.5;
         this.youWinText.anchor.y = 1.0;
 
