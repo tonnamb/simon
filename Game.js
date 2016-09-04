@@ -115,7 +115,7 @@ BasicGame.Game.prototype = {
         for (var i = 0; i < this.numStages; i += 1) {
             this.colorSequence.push(this.game.rnd.integerInRange(0,3));
         }
-        console.log(this.colorSequence);
+        // console.log(this.colorSequence);
 
         this.roundText = this.game.add.text(300, 20, 'Round: 1',
         { font: "50px 'Indie Flower'", fill: "#fff" , align: "center"});
@@ -214,7 +214,7 @@ BasicGame.Game.prototype = {
             if (this.thisObj.playerInput.length < this. round) {
                 this.thisObj.playerInput.push( this.thisObj.colorDictRev[color] );
             }
-            console.log(this.thisObj.playerInput);
+            // console.log(this.thisObj.playerInput);
             // Clicked enough times for the round
             if (this.thisObj.playerInput.length === this.round) {
 
@@ -230,7 +230,7 @@ BasicGame.Game.prototype = {
 
                 if (JSON.stringify(this.thisObj.playerInput) === JSON.stringify(this.thisObj.colorSequence.slice(0, this.round))) {
                     // Correct sequence
-                    console.log('Match!');
+                    // console.log('Match!');
                     // Clear playerInput
                     this.thisObj.playerInput = [];
                     // Hide try again text
@@ -239,7 +239,7 @@ BasicGame.Game.prototype = {
                     this.thisObj.roundText.setText('Correct!');
                     if (this.thisObj.roundCounter === this.thisObj.numStages) {
                         // Win!
-                        console.log('You win!');
+                        // console.log('You win!');
                         this.thisObj.createYouWinText();
                     } else {
                         // Start next round
@@ -253,7 +253,7 @@ BasicGame.Game.prototype = {
                     
                 } else {
                     // Wrong sequence
-                    console.log('Not Match!');
+                    // console.log('Not Match!');
                     // Clear playerInput
                     this.thisObj.playerInput = [];
                     // Show try again text
