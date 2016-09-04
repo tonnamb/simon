@@ -47,12 +47,20 @@ BasicGame.MainMenu.prototype = {
 		{ font: "50px Righteous", fill: "#000" , align: "center"});
 		hardText.anchor.x = 0.5;
 		hardText.anchor.y = 0.5;
+		hardText.inputEnabled = true;
+		hardText.events.onInputDown.add(this.startHard, this);
 
 	},
 
 	startGame: function (pointer) {
 
 		this.state.start('Game');
+
+	},
+
+	startHard: function (pointer) {
+
+		this.state.start('GameHard')
 
 	}
 
